@@ -1,0 +1,8 @@
+{
+  "manifest_version": 3,
+  "name": "TabAudioBoost: Volume & Speed Control",
+  "version": "1.0.0",
+  "description": "Boost tab volume and control video playback speed effortlessly.",
+  "permissions": ["activeTab", "scripting"],
+  "action": { "default_popup": "popup.html" }
+}
