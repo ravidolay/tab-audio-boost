@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TabAudioBoost</title>
+    <style>
+        body { width: 240px; background: #0f172a; color: #f8fafc; font-family: sans-serif; padding: 15px; margin: 0; }
+        h2 { font-size: 14px; color: #38bdf8; text-align: center; margin-top: 0; }
+        .box { background: #1e293b; padding: 10px; border-radius: 6px; margin-bottom: 8px; }
+        label { font-size: 11px; color: #94a3b8; display: block; margin-bottom: 5px; }
+        input { width: 100%; }
+    </style>
+</head>
+<body>
+    <h2>🔊 TabAudioBoost</h2>
+    <div class="box">
+        <label>Playback Speed: <span id="speedVal">1.0</span>x</label>
+        <input type="range" id="speedRange" min="0.5" max="4.0" step="0.1" value="1.0">
+    </div>
+    <script>
+        const range = document.getElementById("speedRange");
+        const val = document.getElementById("speedVal");
+        range.addEventListener("input", async (e) => {
+            val.innerText = e.target.value;
+            let [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+            chrome.scripting.executeScript({
+                target: { tabId: tab.id },
+                func: (s) => document.querySelectorAll("video, audio").forEach(v => v.playbackRate = Number(s)),
+                args: [e.target.value]
+            });
+        });
+    </script>
+</body>
+</html>
